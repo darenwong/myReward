@@ -41,6 +41,15 @@ const LoginView = () => {
       console.log("Failed to log in");
     }
   }
+  async function handleDemoSignIn() {
+    try {
+      await login("store@a.com", "abc123");
+      // history.push("/");
+      navigate("/app/dashboard", { replace: true });
+    } catch {
+      console.log("Failed to log in");
+    }
+  }
 
   return (
     <Page className={classes.root} title="Login">
@@ -53,8 +62,8 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: "store@a.com",
-              password: "abc123",
+              email: "",
+              password: "",
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -80,13 +89,6 @@ const LoginView = () => {
                 <Box mb={3}>
                   <Typography color="textPrimary" variant="h2">
                     Sign in for vendor
-                  </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
-                    Demo account credentials provided below.
                   </Typography>
                 </Box>
                 <TextField
@@ -125,6 +127,19 @@ const LoginView = () => {
                     variant="contained"
                   >
                     Sign in now
+                  </Button>
+                </Box>
+                <Box my={2}>
+                  <Button
+                    color="secondary"
+                    disabled={isSubmitting}
+                    fullWidth
+                    onClick={handleDemoSignIn}
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                  >
+                    Sign in using demo account
                   </Button>
                 </Box>
                 <Box my={2}>

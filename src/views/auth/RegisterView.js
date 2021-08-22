@@ -85,7 +85,6 @@ const RegisterView = () => {
               password: Yup.string()
                 .max(255)
                 .required("password is required"),
-              policy: Yup.boolean().oneOf([true], "This field must be checked"),
             })}
             onSubmit={handleFormSubmit}
           >
@@ -161,25 +160,6 @@ const RegisterView = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                <Box alignItems="center" display="flex" ml={-1}>
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography color="textSecondary" variant="body1">
-                    I have read the{" "}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
-                </Box>
                 {Boolean(touched.policy && errors.policy) && (
                   <FormHelperText error>{errors.policy}</FormHelperText>
                 )}
