@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
+import { CircularProgress, Backdrop, makeStyles } from '@material-ui/core';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
+import { useLoading } from 'src/contexts/LoadingContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,15 +31,23 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     height: '100%',
     overflow: 'auto'
-  }
+  },  
+  backdrop: {
+    zIndex: 1500,
+    color: '#fff',
+    display: 'flex',
+    flexDirection: 'column',
+  },
 }));
 
 const DashboardLayout = () => {
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  const { loading } = useLoading();
 
   return (
     <div className={classes.root}>
+      <Backdrop className={classes.backdrop} open={loading.state}><CircularProgress/> {loading.msg}</Backdrop>
       <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
       <NavBar
         onMobileClose={() => setMobileNavOpen(false)}
